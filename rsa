@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+
+import sys
+import math
+
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(math.sqrt(num)) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def find_prime_factors(n):
+    for i in range(2, n):
+        if n % i == 0 and is_prime(i) and is_prime(n // i):
+            return i, n // i
+    return None, None
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python prime_factors.py <number>")
+        sys.exit(1)
+
+    try:
+        n = int(sys.argv[1])
+    except ValueError:
+        print("Invalid input. Please provide a valid number.")
+        sys.exit(1)
+
+    factor1, factor2 = find_prime_factors(n)
+
+    if factor1 is not None:
+        print(f"{n} = {factor1} * {factor2}")
+    else:
+        print(f"No prime factors found for {n}.")
+
+if __name__ == "__main__":
+    main()
